@@ -1,0 +1,96 @@
+[gd_scene format=3 uid="uid://cnhvfewk1t1hn"]
+
+[ext_resource type="PackedScene" uid="uid://dugf5tlpahit0" path="res://imports/gltfs/eightfold_world_layout.gltf" id="1_80nbo"]
+[ext_resource type="Script" uid="uid://otf8j0ludw8h" path="res://managers/dynamic_loader.gd" id="1_eow3j"]
+[ext_resource type="Script" uid="uid://drsbkd3shde38" path="res://managers/world_manager.gd" id="1_fc0e3"]
+[ext_resource type="PackedScene" uid="uid://d1y2la7f58b2i" path="res://entities/Player/player.tscn" id="1_feb5d"]
+[ext_resource type="Texture2D" uid="uid://bbirdkow4g74l" path="res://imports/images/citrus_orchard_puresky_2k.exr" id="2_e2o6t"]
+[ext_resource type="Script" uid="uid://dtsbfs430oyug" path="res://managers/dynamic_skybox.gd" id="3_7jktm"]
+[ext_resource type="Script" uid="uid://xxk7qptfrdb8" path="res://ui/ui.gd" id="6_ryrav"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_ryrav"]
+font_size = 30
+stacked_outline_count = 1
+stacked_outline_0/size = 4
+
+[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_fc0e3"]
+panorama = ExtResource("2_e2o6t")
+
+[sub_resource type="Sky" id="Sky_7jktm"]
+sky_material = SubResource("PanoramaSkyMaterial_fc0e3")
+
+[sub_resource type="Environment" id="Environment_ryrav"]
+background_mode = 2
+sky = SubResource("Sky_7jktm")
+sky_rotation = Vector3(0, -1.998402, 0)
+ssr_enabled = true
+ssr_depth_tolerance = 4.01
+
+[sub_resource type="CameraAttributesPractical" id="CameraAttributesPractical_ryrav"]
+auto_exposure_enabled = true
+dof_blur_far_distance = 30.0
+
+[node name="Game" type="Node" unique_id=935270119]
+
+[node name="DynamicLoader" type="Node" parent="." unique_id=1668140400 node_paths=PackedStringArray("world_manager")]
+script = ExtResource("1_eow3j")
+world_manager = NodePath("../World_manager")
+metadata/_custom_type_script = "uid://otf8j0ludw8h"
+
+[node name="World_manager" type="Node3D" parent="." unique_id=1495977938 node_paths=PackedStringArray("player", "skybox", "loader", "ui")]
+script = ExtResource("1_fc0e3")
+player = NodePath("Player")
+skybox = NodePath("../DynamicSkybox")
+loader = NodePath("../DynamicLoader")
+ui = NodePath("../UI")
+teleport_chunk_x = null
+teleport_chunk_y = null
+teleport_chunk_z = null
+
+[node name="Player" parent="World_manager" unique_id=87906483 instance=ExtResource("1_feb5d")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0, 0, 0)
+
+[node name="DynamicSkybox" type="Node3D" parent="." unique_id=1711279721]
+script = ExtResource("3_7jktm")
+
+[node name="eightfold_world_layout" parent="DynamicSkybox" unique_id=1905401548 instance=ExtResource("1_80nbo")]
+transform = Transform3D(100, 0, 0, 0, 100, 0, 0, 0, 100, 0, 0, 0)
+
+[node name="holy_nation_upper_cathedral_ward" parent="DynamicSkybox/eightfold_world_layout" index="6" unique_id=1726017491]
+visible = false
+
+[node name="holy_nation_upper_cathedral_ward_001" parent="DynamicSkybox/eightfold_world_layout" index="7" unique_id=1971379026]
+visible = false
+
+[node name="UI" type="Control" parent="." unique_id=672497899]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("6_ryrav")
+
+[node name="DebugStatus" type="Label" parent="UI" unique_id=717569136]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 0.38500002
+anchor_bottom = 1.0
+offset_right = -0.52001953
+grow_horizontal = 2
+grow_vertical = 2
+label_settings = SubResource("LabelSettings_ryrav")
+autowrap_mode = 3
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1344947779]
+environment = SubResource("Environment_ryrav")
+camera_attributes = SubResource("CameraAttributesPractical_ryrav")
+
+[node name="Sun" type="Node3D" parent="WorldEnvironment" unique_id=1799630280]
+
+[node name="LocalSun" type="DirectionalLight3D" parent="WorldEnvironment/Sun" unique_id=144543092]
+
+[node name="SkyboxSun" type="DirectionalLight3D" parent="WorldEnvironment/Sun" unique_id=1102942594]
+
+[editable path="DynamicSkybox/eightfold_world_layout"]

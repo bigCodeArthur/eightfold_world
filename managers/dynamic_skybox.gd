@@ -1,0 +1,1 @@
+class_name DynamicSkybox extends Node3D

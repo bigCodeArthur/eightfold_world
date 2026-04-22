@@ -1,0 +1,20 @@
+[gd_scene format=3 uid="uid://d1ouivhxvbaa1"]
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_xmk5a"]
+top_radius = 1000.0
+bottom_radius = 1000.0
+height = 0.02
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_j7luk"]
+radius = 1000.0
+
+[node name="CityTest" type="Node3D" unique_id=468772070]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=759855259]
+mesh = SubResource("CylinderMesh_xmk5a")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="." unique_id=977884793]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D" unique_id=2092996643]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
+shape = SubResource("CylinderShape3D_j7luk")
