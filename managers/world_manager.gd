@@ -9,20 +9,26 @@ class_name WorldManager extends Node3D
 
 @export var teleport_chunk_x: int:
 	set(value):
+		offset_all_children(Vector3(teleport_chunk_x - value, 0, 0), true)
 		move_skybox()
+		chunk.x = value
 		teleport_chunk_x = value
 
-@export var teleport_chunk_y: int:
+@export var teleport_chunk_y: int: 
 	set(value):
+		offset_all_children(Vector3(0, teleport_chunk_y - value, 0), true)
 		move_skybox()
+		chunk.y = value
 		teleport_chunk_y = value
 
 @export var teleport_chunk_z: int:
 	set(value):
+		offset_all_children(Vector3(0, 0, teleport_chunk_z - value), true)
 		move_skybox()
+		chunk.z = value
 		teleport_chunk_z = value
 
-var chunk := Vector3L.new(0, 0, 0)
+var chunk := Vector3L.new(teleport_chunk_x, teleport_chunk_y, teleport_chunk_z)
 
 var chunk_bounds_size = Vector3( 2000,  2000,  2000)
 var chunk_bounds: AABB = AABB(
@@ -36,8 +42,6 @@ var loading_bounds: AABB = AABB(
 	loading_bounds_size
 )
 
-var load_unload_distance: int = 10000
-
 
 func _process(_delta: float) -> void:
 	load_and_unload()
@@ -47,30 +51,27 @@ func _process(_delta: float) -> void:
 
 
 func load_and_unload():
-	loading_bounds.position = player.position -loading_bounds_size/2 
-	var load_x: float = chunk.x + player.position.x
-	var load_z: float = chunk.z + player.position.z
-	loader.load_and_unload(player.position, chunk, loading_bounds)
+	loading_bounds.position = player.position - loading_bounds_size/2 
+	loader.load_and_unload(chunk, loading_bounds)
 
 
 func marching_origin():
 	if not chunk_bounds.has_point(player.position):
-
-		var offset = -player.position
+		var offset: Vector3 = -player.position
 		offset_all_children(offset)
 
-		chunk.x += offset.x
-		chunk.y += offset.y
-		chunk.z += offset.z
+		chunk.x += int(offset.x)
+		chunk.y += int(offset.y)
+		chunk.z += int(offset.z)
 
 
-func offset_all_children(offset: Vector3):
+func offset_all_children(offset: Vector3, exclude_player: bool = false):
 	for child in get_children():
+		if child == player and exclude_player: continue
 		if not child is Node3D: continue
 		var node3d := child as Node3D
-		if node3d.position.distance_to(player.position) > load_unload_distance:
-			node3d.queue_free()
 		node3d.position += offset
+		print("now position: ", node3d.position)
 
 
 func debug_print():

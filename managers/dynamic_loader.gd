@@ -14,15 +14,9 @@ class SceneByChunk extends Object:
 		y = y_in
 		z = z_in
 
-	func within_loading_distance(chunk: Vector3L, load_distance: int) -> bool:
-		var in_x = chunk.x
-		var in_y = chunk.z
-		
-		if not x > in_x - load_distance: return false
-		if not x < in_x + load_distance: return false
-		if not y > in_y - load_distance: return false
-		if not y < in_y + load_distance: return false
-		return true
+	func within_loading_distance(chunk: Vector3L, bounds: AABB) -> bool:
+		var localized = Vector3(x - chunk.x, y - chunk.y, z - chunk.z)
+		return bounds.has_point(localized)
 
 var loaded: Array[SceneByChunk] = []
 var to_load: Array[SceneByChunk] = []
@@ -32,13 +26,15 @@ var scene_database: Array[SceneByChunk] = [
 ]
 
 
-func load_and_unload(chunk: Vector3L, player_position: Vector3, loading_bounds: AABB):
+func load_and_unload(chunk: Vector3L, loading_bounds: AABB):
 	for scene in scene_database:
-		if scene.within_loading_distance(chunk, player_position, loading_bounds):
+		if scene.within_loading_distance(chunk, loading_bounds):
 			if scene in to_load or scene in loaded: continue
 			all_loaded = false
 			to_load.append(scene)
 			ResourceLoader.load_threaded_request(scene.path)
+		else:
+			pass
 
 
 func _physics_process(_delta: float) -> void:
