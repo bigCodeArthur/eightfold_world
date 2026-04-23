@@ -8,6 +8,8 @@
 
 [node name="Player" type="CharacterBody3D" unique_id=87906483]
 script = ExtResource("1_s65uf")
+disable_gavity = true
+auto_walk = true
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=389918251]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)

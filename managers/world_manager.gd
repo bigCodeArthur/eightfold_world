@@ -28,7 +28,9 @@ class_name WorldManager extends Node3D
 		chunk.z = value
 		teleport_chunk_z = value
 
+
 var chunk := Vector3L.new(teleport_chunk_x, teleport_chunk_y, teleport_chunk_z)
+
 
 var chunk_bounds_size = Vector3( 2000,  2000,  2000)
 var chunk_bounds: AABB = AABB(
@@ -36,7 +38,8 @@ var chunk_bounds: AABB = AABB(
 	chunk_bounds_size
 )
 
-var loading_bounds_size = Vector3( 2000,  2000,  2000)
+
+var loading_bounds_size = Vector3( 3000,  3000,  3000)
 var loading_bounds: AABB = AABB(
 	-loading_bounds_size / 2,
 	loading_bounds_size

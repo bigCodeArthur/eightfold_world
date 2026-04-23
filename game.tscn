@@ -43,8 +43,11 @@ player = NodePath("Player")
 skybox = NodePath("../DynamicSkybox")
 loader = NodePath("../DynamicLoader")
 ui = NodePath("../UI")
+teleport_chunk_y = -3000
 
 [node name="Player" parent="World_manager" unique_id=87906483 instance=ExtResource("1_feb5d")]
+disable_gavity = false
+auto_walk = false
 
 [node name="DynamicSkybox" type="Node3D" parent="." unique_id=1711279721]
 script = ExtResource("3_7jktm")
@@ -52,11 +55,37 @@ script = ExtResource("3_7jktm")
 [node name="eightfold_world_layout" parent="DynamicSkybox" unique_id=1435972113 instance=ExtResource("1_80nbo")]
 transform = Transform3D(100, 0, 0, 0, 100, 0, 0, 0, 100, 0, 0, 0)
 
-[node name="holy_nation_upper_cathedral_ward" parent="DynamicSkybox/eightfold_world_layout" index="6" unique_id=175189118]
-visible = false
+[node name="holy_nation" parent="DynamicSkybox/eightfold_world_layout" index="0" unique_id=1020792952]
+layers = 524288
 
-[node name="holy_nation_upper_cathedral_ward_001" parent="DynamicSkybox/eightfold_world_layout" index="7" unique_id=1321936024]
+[node name="great_ocean" parent="DynamicSkybox/eightfold_world_layout" index="1" unique_id=673441248]
+layers = 524288
+
+[node name="pearlescant_haven" parent="DynamicSkybox/eightfold_world_layout" index="2" unique_id=1038811688]
+layers = 524288
+
+[node name="black_mountain" parent="DynamicSkybox/eightfold_world_layout" index="3" unique_id=1337522641]
+layers = 524288
+
+[node name="great_bridge" parent="DynamicSkybox/eightfold_world_layout" index="4" unique_id=1744342115]
+layers = 524288
+
+[node name="holy_nation_cathedral_ward" parent="DynamicSkybox/eightfold_world_layout" index="5" unique_id=2128428941]
+layers = 524288
+
+[node name="holy_nation_upper_cathedral_ward" parent="DynamicSkybox/eightfold_world_layout" index="6" unique_id=147170299]
 visible = false
+layers = 524288
+
+[node name="holy_nation_upper_cathedral_ward_001" parent="DynamicSkybox/eightfold_world_layout" index="7" unique_id=1409187151]
+visible = false
+layers = 524288
+
+[node name="great_ocean_001" parent="DynamicSkybox/eightfold_world_layout" index="8" unique_id=176538150]
+layers = 524288
+
+[node name="Plane" parent="DynamicSkybox/eightfold_world_layout" index="9" unique_id=1243444670]
+layers = 524288
 
 [node name="UI" type="Control" parent="." unique_id=672497899]
 layout_mode = 3
@@ -69,7 +98,6 @@ script = ExtResource("6_ryrav")
 
 [node name="DebugStatus" type="Label" parent="UI" unique_id=717569136]
 unique_name_in_owner = true
-visible = false
 layout_mode = 1
 anchors_preset = -1
 anchor_right = 0.5
@@ -84,9 +112,14 @@ environment = SubResource("Environment_ryrav")
 camera_attributes = SubResource("CameraAttributesPractical_ryrav")
 
 [node name="Sun" type="Node3D" parent="WorldEnvironment" unique_id=1799630280]
+transform = Transform3D(0.9942672, 0.101109706, -0.034777362, 0, 0.3252546, 0.9456265, 0.10692351, -0.94020545, 0.32338998, 0, 0, 0)
 
 [node name="LocalSun" type="DirectionalLight3D" parent="WorldEnvironment/Sun" unique_id=144543092]
+shadow_enabled = true
+shadow_caster_mask = 4294443007
 
 [node name="SkyboxSun" type="DirectionalLight3D" parent="WorldEnvironment/Sun" unique_id=1102942594]
+shadow_enabled = true
+shadow_caster_mask = 4294443008
 
 [editable path="DynamicSkybox/eightfold_world_layout"]
